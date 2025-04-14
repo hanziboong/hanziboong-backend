@@ -41,6 +41,7 @@ public enum ErrorCode {
 
     // 404 NOT FOUND
     NOT_FOUND_EMAIL_EXCEPTION(HttpStatus.NOT_FOUND, "찾을 수 없는 Email입니다."),
+    NOT_FOUND_HOUSE_EXCEPTION(HttpStatus.NOT_FOUND, "찾을 수 없는 집입니다."),
     NOT_FOUND_USER_EXCEPTION(HttpStatus.NOT_FOUND, "해당 검색결과에 해당하는 사용자를 찾을 수 없습니다."),
 
     // 409 Conflict

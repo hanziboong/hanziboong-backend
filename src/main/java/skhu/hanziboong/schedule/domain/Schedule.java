@@ -47,12 +47,15 @@ public class Schedule extends BaseEntity {
     @Builder
     public Schedule(String title, String description,
                     LocalDateTime startAt, LocalDateTime endAt,
-                    House house, Set<ScheduleParticipant> participants) {
+                    House house) {
         this.title = title;
         this.description = description;
         this.startAt = startAt;
         this.endAt = endAt;
         this.house = house;
+    }
+
+    public void addParticipants(Set<ScheduleParticipant> participants) {
         this.participants = participants;
     }
 }

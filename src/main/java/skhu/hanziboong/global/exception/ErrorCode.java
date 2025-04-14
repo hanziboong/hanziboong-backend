@@ -3,7 +3,6 @@ package skhu.hanziboong.global.exception;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.val;
 import org.springframework.http.HttpStatus;
 
 @Getter
@@ -58,9 +57,9 @@ public enum ErrorCode {
             ;
 
     private final HttpStatus httpStatus;
-    private final String errorMessage;
+    private final String message;
 
-    public int getHttpStatus() {
+    public int getHttpStatusCode() {
         return httpStatus.value();
     }
 }

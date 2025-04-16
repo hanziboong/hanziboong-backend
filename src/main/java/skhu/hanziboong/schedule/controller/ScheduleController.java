@@ -1,5 +1,6 @@
 package skhu.hanziboong.schedule.controller;
 
+import java.net.URI;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ public class ScheduleController {
     @PostMapping
     public ResponseEntity<Void> createSchedule(@RequestBody ScheduleRequest request) {
         scheduleService.createSchedule(request);
-        return ResponseEntity.ok().build();
+        
+        return ResponseEntity.created(URI.create("/api/schedule/" + request.houseId())).build();
     }
 }

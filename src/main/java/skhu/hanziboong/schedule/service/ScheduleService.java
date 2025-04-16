@@ -29,7 +29,6 @@ public class ScheduleService {
 
     @Transactional
     public void createSchedule(ScheduleRequest scheduleRequest) {
-
         House house = houseRepository.findById(scheduleRequest.houseId())
                 .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_HOUSE_EXCEPTION,
                         ErrorCode.NOT_FOUND_HOUSE_EXCEPTION.getMessage()));
@@ -43,7 +42,7 @@ public class ScheduleService {
     }
 
     private Set<ScheduleParticipant> getParticipants(Schedule schedule, List<Long> participantIds) {
-        return  participantIds.stream()
+        return participantIds.stream()
                 .map(this::getMemberById)
                 .map(member -> new ScheduleParticipant(schedule, member))
                 .collect(Collectors.toSet());

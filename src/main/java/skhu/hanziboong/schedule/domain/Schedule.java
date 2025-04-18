@@ -53,8 +53,4 @@ public class Schedule extends BaseEntity {
         this.endAt = endAt;
         this.house = house;
     }
-
-    public void addParticipants(Set<ScheduleParticipant> participants) {
-        this.participants = participants;
-    }
 }

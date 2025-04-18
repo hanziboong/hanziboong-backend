@@ -43,9 +43,6 @@ public class Schedule extends BaseEntity {
     @JoinColumn(name = "house_id", nullable = false)
     private House house;
 
-    @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<ScheduleParticipant> participants;
-
     @Builder
     public Schedule(String title, String description,
                     LocalDateTime startAt, LocalDateTime endAt,

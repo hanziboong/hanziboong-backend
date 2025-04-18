@@ -33,9 +33,6 @@ public class House extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private HouseType houseType;
 
-    @OneToMany(mappedBy = "house", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Schedule> schedule;
-
     public House(HouseType houseType) {
         this.houseType = houseType;
     }

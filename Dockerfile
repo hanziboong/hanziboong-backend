@@ -18,7 +18,7 @@ COPY src /app/src
 RUN ./gradlew clean build -x test --no-daemon
 
 # 🔹 2단계: 실행용 이미지 (경량 JRE)
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:17-jre
 
 WORKDIR /app
 

@@ -17,6 +17,7 @@ import skhu.hanziboong.member.repository.MemberRepository;
 import skhu.hanziboong.schedule.domain.Schedule;
 import skhu.hanziboong.schedule.domain.ScheduleParticipant;
 import skhu.hanziboong.schedule.dto.request.ScheduleRequest;
+import skhu.hanziboong.schedule.repository.ScheduleParticipantRepository;
 import skhu.hanziboong.schedule.repository.ScheduleRepository;
 
 @Service
@@ -24,6 +25,7 @@ import skhu.hanziboong.schedule.repository.ScheduleRepository;
 public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
+    private final ScheduleParticipantRepository scheduleParticipantRepository;
     private final MemberRepository memberRepository;
     private final HouseRepository houseRepository;
 
@@ -34,11 +36,10 @@ public class ScheduleService {
                         ErrorCode.NOT_FOUND_HOUSE_EXCEPTION.getMessage()));
 
         Schedule schedule = scheduleRequest.toSchedule(house);
+        scheduleRepository.save(schedule);
 
         Set<ScheduleParticipant> participants = getParticipants(schedule, scheduleRequest.participantUserId());
-        schedule.addParticipants(participants);
-
-        scheduleRepository.save(schedule);
+        scheduleParticipantRepository.saveAll(participants);
     }
 
     private Set<ScheduleParticipant> getParticipants(Schedule schedule, List<Long> participantIds) {

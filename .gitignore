@@ -39,5 +39,5 @@ out/
 ### Mac OS ###
 **/.DS_Store
 
-### docker-compose ###
+### docker-compose.yml ###
 docker-compose.yml

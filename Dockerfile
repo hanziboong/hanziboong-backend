@@ -1,5 +1,5 @@
 # 🔹 1단계: 빌드용 이미지 (경량 Alpine 기반 Gradle + JDK 17)
-FROM gradle:8.4.0-jdk17-alpine AS builder
+FROM gradle:8.4.0-jdk17 AS builder
 
 # 작업 디렉토리 설정
 WORKDIR /app

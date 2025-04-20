@@ -23,7 +23,7 @@ FROM arm64v8/openjdk:17-jdk-slim
 WORKDIR /app
 
 # 실행 파일 복사 (파일명이 정해지지 않았으므로 와일드카드 사용)
-COPY --from=builder /app/build/libs/*.jar app.jar
+COPY --from=builder /app/build/libs/app.jar app.jar
 
 # 포트 노출 (Spring Boot 기본 포트)
 EXPOSE 8080

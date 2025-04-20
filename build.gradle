@@ -40,5 +40,5 @@ tasks.named('test') {
 }
 
 bootJar {
-	mainClass = 'com.hanziboong.HanziboongBackendApplication'
+	mainClass = 'skhu.hanziboong.HanziboongBackendApplication'
 }

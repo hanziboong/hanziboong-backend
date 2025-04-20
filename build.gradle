@@ -13,6 +13,12 @@ java {
 	}
 }
 
+bootJar {
+	enabled = true
+	archiveFileName = 'app.jar'
+	mainClass = 'skhu.hanziboong.HanziboongBackendApplication'
+}
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
@@ -37,8 +43,4 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
-}
-
-bootJar {
-	mainClass = 'skhu.hanziboong.HanziboongBackendApplication'
 }

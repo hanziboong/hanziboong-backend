@@ -7,10 +7,10 @@ WORKDIR /app
 # 변경 가능성이 적은 파일부터 복사해서 Docker Layer 캐시 활용
 COPY build.gradle settings.gradle /app/
 COPY gradle /app/gradle
-COPY gradlew /app/
+COPY gradlew /app/gradlew
 
 # 의존성 캐싱 (속도 개선)
-RUN chmod +x ./gradlew
+RUN chmod +x /app/gradlew
 
 COPY src /app/src
 

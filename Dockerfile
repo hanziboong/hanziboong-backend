@@ -5,13 +5,16 @@ FROM --platform=linux/arm64 openjdk:17-jdk-slim AS builder
 WORKDIR /app
 
 # 변경 가능성이 적은 파일부터 복사해서 Docker Layer 캐시 활용
-COPY . /app
+COPY build.gradle settings.gradle /app/
+COPY gradle /app/gradle
 
 # 의존성 캐싱 (속도 개선)
-RUN chmod +x ./gradlew
+RUN gradle build -x test --no-daemon || return 0
+
+COPY src /app/src
 
 # 전체 빌드 수행 (테스트 생략, CI에서 별도로 테스트하는 경우)
-RUN ./gradlew clean build -x test --no-daemon
+RUN gradle clean build -x test --no-daemon
 
 # 🔹 2단계: 실행용 이미지 (경량 JRE)
 FROM --platform=linux/arm64 openjdk:17-jdk-slim

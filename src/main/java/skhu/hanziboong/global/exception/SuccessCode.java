@@ -16,7 +16,6 @@ public enum SuccessCode {
     SMS_VERIFY_SUCCESS(HttpStatus.OK, "본인확인 인증에 성공했습니다");
 
     // 201 Created, Delete
-
     private final HttpStatus httpStatus;
     private final String message;
 

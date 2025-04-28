@@ -11,12 +11,12 @@ public enum ErrorCode {
 
     // 400 Bad Request
     VALIDATION_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 요청입니다."),
-    PASSWORD_MISMATCH_EXCEPTION(HttpStatus.BAD_REQUEST,"존재하지 않는 비밀번호 or 비밀번호가 잘못되었습니다"),
+    PASSWORD_MISMATCH_EXCEPTION(HttpStatus.BAD_REQUEST, "존재하지 않는 비밀번호 or 비밀번호가 잘못되었습니다"),
     VALIDATION_REQUEST_MISSING_EXCEPTION(HttpStatus.BAD_REQUEST, "필수적인 요청 값이 입력되지 않았습니다."),
     VALIDATION_REQUEST_HEADER_MISSING_EXCEPTION(HttpStatus.BAD_REQUEST, "요청 헤더값이 입력되지 않았습니다."),
     VALIDATION_REQUEST_PARAMETER_MISSING_EXCEPTION(HttpStatus.BAD_REQUEST, "요청 파라미터값이 입력되지 않았습니다."),
     REQUEST_METHOD_VALIDATION_EXCEPTION(HttpStatus.BAD_REQUEST, "요청 메소드가 잘못됐습니다."),
-    VALIDATION_REQUEST_FAIL_USERINFO_EXCEPTION(HttpStatus.BAD_REQUEST,"사용자 정보를 받아오는데 실패했습니다."),
+    VALIDATION_REQUEST_FAIL_USERINFO_EXCEPTION(HttpStatus.BAD_REQUEST, "사용자 정보를 받아오는데 실패했습니다."),
     VALIDATION_JSON_SYNTAX_FAIL(HttpStatus.BAD_REQUEST, "JSON 파싱 오류 발생"),
     INVALID_ROLE_TYPE_EXCEPTION(HttpStatus.BAD_REQUEST, "올바르지 않은 권한 요청입니다."),
     INVALID_ID_EXCEPTION(HttpStatus.BAD_REQUEST, "사용자 ID가 유효하지 않습니다. "),
@@ -54,8 +54,7 @@ public enum ErrorCode {
 
     // 503 Service Unavailable
     FAILED_GET_TOKEN_EXCEPTION(HttpStatus.UNAVAILABLE_FOR_LEGAL_REASONS, "구글 엑세스 토큰을 가져오는데 실패했습니다."),
-    FAILED_UPLOAD_IMAGE_FILE_EXCEPTION(HttpStatus.SERVICE_UNAVAILABLE, "이미지를 업로드하는데 실패했습니다. ")
-            ;
+    FAILED_UPLOAD_IMAGE_FILE_EXCEPTION(HttpStatus.SERVICE_UNAVAILABLE, "이미지를 업로드하는데 실패했습니다. ");
 
     private final HttpStatus httpStatus;
     private final String message;

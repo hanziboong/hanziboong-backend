@@ -17,13 +17,13 @@ spring:
 
 springdoc:
   api-docs:
-    path: /v3/api-docs  # 기본 스펙 JSON 경로
+    path: /v3/api-docs
   swagger-ui:
-    path: /swagger-ui.html  # Swagger UI 접속 경로
-    operationsSorter: alpha  # API 목록 알파벳 순 정렬
-    tagsSorter: alpha        # 태그 알파벳 순 정렬
-    display-request-duration: true  # 요청/응답 시간 표시
+    path: /swagger-ui.html
+    operationsSorter: alpha
+    tagsSorter: alpha
+    display-request-duration: true
     syntax-highlight:
-      theme: nord            # 코드 하이라이트 테마
+      theme: nord
   default-consumes-media-type: application/json
   default-produces-media-type: application/json

@@ -50,9 +50,7 @@ public class RuleController {
             ),
     })
     @PostMapping
-    public ResponseEntity<Void> createRule(
-            @RequestBody RuleRequest request
-    ) {
+    public ResponseEntity<Void> createRule(@RequestBody RuleRequest request) {
         RuleCreateResponse response = ruleService.createRule(request);
 
         return ResponseEntity.created(URI.create("/api/rules/" + response.id())).build();

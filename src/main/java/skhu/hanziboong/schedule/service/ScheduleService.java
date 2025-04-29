@@ -1,7 +1,11 @@
 package skhu.hanziboong.schedule.service;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.YearMonth;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.AccessLevel;
@@ -17,6 +21,8 @@ import skhu.hanziboong.member.repository.MemberRepository;
 import skhu.hanziboong.schedule.domain.Schedule;
 import skhu.hanziboong.schedule.domain.ScheduleParticipant;
 import skhu.hanziboong.schedule.dto.request.ScheduleRequest;
+import skhu.hanziboong.schedule.dto.response.ScheduleCreateResponse;
+import skhu.hanziboong.schedule.dto.response.ScheduleResponse;
 import skhu.hanziboong.schedule.repository.ScheduleParticipantRepository;
 import skhu.hanziboong.schedule.repository.ScheduleRepository;
 
@@ -30,7 +36,7 @@ public class ScheduleService {
     private final HouseRepository houseRepository;
 
     @Transactional
-    public void createSchedule(ScheduleRequest scheduleRequest) {
+    public ScheduleCreateResponse createSchedule(ScheduleRequest scheduleRequest) {
         House house = houseRepository.findById(scheduleRequest.houseId())
                 .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_HOUSE_EXCEPTION,
                         ErrorCode.NOT_FOUND_HOUSE_EXCEPTION.getMessage()));
@@ -40,6 +46,8 @@ public class ScheduleService {
 
         Set<ScheduleParticipant> participants = getParticipants(schedule, scheduleRequest.participantUserId());
         scheduleParticipantRepository.saveAll(participants);
+
+        return ScheduleCreateResponse.from(schedule);
     }
 
     private Set<ScheduleParticipant> getParticipants(Schedule schedule, List<Long> participantIds) {
@@ -53,5 +61,33 @@ public class ScheduleService {
         return memberRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER_EXCEPTION,
                         ErrorCode.NOT_FOUND_USER_EXCEPTION.getMessage()));
+    }
+
+    @Transactional(readOnly = true)
+    public List<ScheduleResponse> getSchedulesByHouseAndYearAndMonth(Long houseId, Integer year, Integer month) {
+        House house = houseRepository.findById(houseId)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_HOUSE_EXCEPTION,
+                        ErrorCode.NOT_FOUND_HOUSE_EXCEPTION.getMessage()));
+
+        List<Schedule> schedules = getSchedules(house, year, month);
+        return createResponsesFrom(schedules);
+    }
+
+    private List<Schedule> getSchedules(House house, Integer year, Integer month) {
+        LocalDateTime start = LocalDateTime.of(year, month, 1, 0, 0);
+        YearMonth yearMonth = YearMonth.of(year, month);
+        LocalDateTime end = LocalDateTime.of(yearMonth.atEndOfMonth(), LocalTime.MAX);
+
+        return scheduleRepository.findByHouseAndStartAtBetween(house, start, end);
+    }
+
+    private List<ScheduleResponse> createResponsesFrom(List<Schedule> schedules) {
+        List<ScheduleResponse> responses = new ArrayList<>();
+        for (Schedule schedule : schedules) {
+            List<ScheduleParticipant> participants = scheduleParticipantRepository.findAllBySchedule(schedule);
+            responses.add(ScheduleResponse.from(schedule, participants));
+        }
+
+        return Collections.unmodifiableList(responses);
     }
 }

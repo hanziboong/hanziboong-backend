@@ -43,6 +43,10 @@ public class ScheduleParticipant extends BaseEntity {
         this.member = member;
     }
 
+    public String getMemberName() {
+        return member.getNickname();
+    }
+
     @EqualsAndHashCode.Include
     private Long scheduleId() {
         if (schedule == null) {

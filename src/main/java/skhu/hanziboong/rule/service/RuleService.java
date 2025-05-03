@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import skhu.hanziboong.house.domain.House;
 import skhu.hanziboong.house.repository.HouseRepository;
+import skhu.hanziboong.member.domain.Member;
+import skhu.hanziboong.member.repository.MemberRepository;
 import skhu.hanziboong.rule.domain.Rule;
 import skhu.hanziboong.rule.dto.request.RuleRequest;
 import skhu.hanziboong.rule.dto.response.RuleCreateResponse;
@@ -18,11 +20,14 @@ import skhu.hanziboong.rule.repository.RuleRepository;
 public class RuleService {
 
     private final RuleRepository ruleRepository;
+    private final MemberRepository memberRepository;
     private final HouseRepository houseRepository;
 
     @Transactional
     public RuleCreateResponse createRule(RuleRequest request) {
-        Rule rule = ruleRepository.save(request.toRule());
+        Member member = memberRepository.findById(request.memberId())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+        Rule rule = ruleRepository.save(request.toRule(member));
 
         return RuleCreateResponse.from(rule);
     }

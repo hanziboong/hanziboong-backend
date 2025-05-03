@@ -48,7 +48,7 @@ public class ScheduleController {
     public ResponseEntity<ScheduleCreateResponse> createSchedule(@RequestBody ScheduleRequest request) {
         ScheduleCreateResponse response = scheduleService.createSchedule(request);
 
-        return ResponseEntity.created(URI.create("/api/schedule/" + response.id())).build();
+        return ResponseEntity.created(URI.create("/api/schedules/" + response.id())).build();
     }
 
     @Operation(summary = "집 ID, 연도, 월 기준 일정 목록 조회")

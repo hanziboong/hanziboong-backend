@@ -38,4 +38,8 @@ public class Member extends BaseEntity {
         this.nickname = nickname;
         this.house = house;
     }
+
+    public Long getHouseId() {
+        return house.getId();
+    }
 }

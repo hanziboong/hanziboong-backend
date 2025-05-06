@@ -1,4 +1,4 @@
-package skhu.hanziboong.schedule.controller;
+package skhu.hanziboong.member.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -7,32 +7,28 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.net.URI;
-import java.util.List;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import skhu.hanziboong.global.exception.model.BadRequestException;
-import skhu.hanziboong.schedule.dto.request.ScheduleRequest;
-import skhu.hanziboong.schedule.dto.response.ScheduleCreateResponse;
-import skhu.hanziboong.schedule.dto.response.ScheduleResponse;
-import skhu.hanziboong.schedule.service.ScheduleService;
+import skhu.hanziboong.member.dto.request.MemberRequest;
+import skhu.hanziboong.member.dto.response.MemberCreateResponse;
+import skhu.hanziboong.member.dto.response.MemberResponse;
+import skhu.hanziboong.member.service.MemberService;
 
-@Tag(name = "일정")
+@Tag(name = "사용자")
+@RequiredArgsConstructor
 @RestController
-@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
-@RequestMapping("/api/schedules")
-public class ScheduleController {
+@RequestMapping("/api/members")
+public class MemberController {
 
-    private final ScheduleService scheduleService;
+    private final MemberService memberService;
 
-    @Operation(summary = "일정 생성")
+    @Operation(summary = "사용자 생성")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "201",
@@ -45,13 +41,13 @@ public class ScheduleController {
             ),
     })
     @PostMapping
-    public ResponseEntity<ScheduleCreateResponse> createSchedule(@RequestBody ScheduleRequest request) {
-        ScheduleCreateResponse response = scheduleService.createSchedule(request);
+    public ResponseEntity<MemberCreateResponse> createMember(MemberRequest request) {
+        MemberCreateResponse response = memberService.createMember(request);
 
-        return ResponseEntity.created(URI.create("/api/schedules/" + response.id())).build();
+        return ResponseEntity.created(URI.create("/api/members/" + response.id())).build();
     }
 
-    @Operation(summary = "집 ID, 연도, 월 기준 일정 목록 조회")
+    @Operation(summary = "ID 기준 사용자 단건 상세 조회")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
@@ -59,16 +55,12 @@ public class ScheduleController {
             ),
             @ApiResponse(
                     responseCode = "400",
-                    description = "존재하지 않는 집 ID로 요청했을 때",
+                    description = "존재하지 않는 규칙 ID로 요청했을 때",
                     content = @Content(schema = @Schema(implementation = BadRequestException.class))
             ),
     })
-    @GetMapping("/house/{houseId}")
-    public ResponseEntity<List<ScheduleResponse>> findSchedulesByHouseAndYearAndMonth(
-            @PathVariable Long houseId,
-            @RequestParam("year") Integer year,
-            @RequestParam("month") Integer month
-    ) {
-        return ResponseEntity.ok(scheduleService.getSchedulesByHouseAndYearAndMonth(houseId, year, month));
+    @GetMapping("/{id}")
+    public ResponseEntity<MemberResponse> findMember(@PathVariable Long id) {
+        return ResponseEntity.ok(memberService.findMemberById(id));
     }
 }

@@ -27,3 +27,7 @@ springdoc:
       theme: nord
   default-consumes-media-type: application/json
   default-produces-media-type: application/json
+
+swagger:
+  server:
+    url: http://localhost:8080

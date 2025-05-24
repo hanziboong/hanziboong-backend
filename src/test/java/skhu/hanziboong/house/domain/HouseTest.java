@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
+@DisplayName("집 테스트")
 class HouseTest {
 
     @DisplayName("적절한 타입이 주어지면 집을 생성할 수 있다.")

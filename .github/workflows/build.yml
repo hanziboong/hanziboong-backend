@@ -59,7 +59,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            docker rm -f $(docker ps -qa) || true
+            docker rm -f springboot-app || true
             docker pull ${{ secrets.DOCKER_REPO }}
             cd /home/ubuntu/app
             sudo docker-compose down || true

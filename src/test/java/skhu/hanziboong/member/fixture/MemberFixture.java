@@ -3,6 +3,7 @@ package skhu.hanziboong.member.fixture;
 import static skhu.hanziboong.house.fixture.HouseFixture.DORMITORY;
 
 import java.util.function.BiFunction;
+import skhu.hanziboong.house.domain.House;
 import skhu.hanziboong.member.domain.Member;
 
 public enum MemberFixture {
@@ -16,5 +17,9 @@ public enum MemberFixture {
 
     public Member create() {
         return generator.apply("testusername", "testnickname");
+    }
+
+    public Member createWith(House house) {
+        return new Member("testusername", "testnickname", house);
     }
 }

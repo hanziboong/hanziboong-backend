@@ -25,6 +25,7 @@ public class ExpenseParticipant {
     @Column(nullable = false)
     private Boolean settled;
 
+    // 필요하다면 양방향 설계로 -> 한 명의 멤버가 본인이 참여한 지출 내역을 조회할 수 있도록
     @ManyToOne(fetch = FetchType.LAZY)
     private Member participantMember;
 

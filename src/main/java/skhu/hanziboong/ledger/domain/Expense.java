@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AccessLevel;
@@ -36,6 +37,9 @@ public class Expense extends BaseEntity {
 
     private String memo;
 
+    @Column(nullable = false)
+    private LocalDateTime spendAt;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private House house;
 
@@ -46,13 +50,23 @@ public class Expense extends BaseEntity {
     private List<ExpenseParticipant> participants = new ArrayList<>();
 
     @Builder
-    public Expense(String title, Long expenditure, String memo, House house, Member paidBy,
-                   List<ExpenseParticipant> participants) {
+    public Expense(String title, Long expenditure, LocalDateTime spendAt,
+                   String memo, House house, Member paidBy) {
         this.title = title;
         this.expenditure = expenditure;
+        this.spendAt = spendAt;
         this.memo = memo;
         this.house = house;
         this.paidBy = paidBy;
-        this.participants = participants;
+    }
+
+    public void addParticipants(List<Member> expenseParticipants) {
+        for (Member expenseParticipant : expenseParticipants) {
+            addParticipant(expenseParticipant);
+        }
+    }
+
+    private void addParticipant(Member expenseParticipant) {
+        this.participants.add(ExpenseParticipant.of(expenseParticipant));
     }
 }

@@ -5,13 +5,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Import;
+import skhu.hanziboong.global.ServiceTest;
 import skhu.hanziboong.house.dto.request.HouseRequest;
 import skhu.hanziboong.house.dto.response.HouseCreateResponse;
 
-@Import(value = HouseService.class)
-@DataJpaTest
+@DisplayName("집 서비스 계층 테스트")
+@ServiceTest
 class HouseServiceTest {
 
     private final HouseService houseService;

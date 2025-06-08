@@ -13,7 +13,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import skhu.hanziboong.member.domain.Member;
 import skhu.hanziboong.rule.fixture.RuleFixture;
 
-@DisplayName("규칙 테스트")
+@DisplayName("규칙 도메인 테스트")
 public class RuleTest {
 
     @DisplayName("제목, 설명, 작성자가 주어지면 규칙을 생성할 수 있다.")

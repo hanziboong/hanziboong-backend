@@ -63,6 +63,7 @@ public class Expense extends BaseEntity {
     }
 
     private void addParticipant(Member expenseParticipant) {
-        this.participants.add(ExpenseParticipant.of(expenseParticipant));
+        ExpenseParticipant participant = ExpenseParticipant.of(expenseParticipant, this);
+        this.participants.add(participant);
     }
 }

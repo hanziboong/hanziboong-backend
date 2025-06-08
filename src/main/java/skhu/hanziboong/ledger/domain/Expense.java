@@ -47,8 +47,8 @@ public class Expense extends BaseEntity {
     private List<ExpenseParticipant> participants = new ArrayList<>();
 
     @Builder
-    public Expense(String title, Long expenditure, LocalDateTime spendAt,
-                   String memo, House house, Member paidBy) {
+    public Expense(String title, Long expenditure, String memo,
+                   House house, Member paidBy) {
         this.title = title;
         this.expenditure = expenditure;
         this.memo = memo;

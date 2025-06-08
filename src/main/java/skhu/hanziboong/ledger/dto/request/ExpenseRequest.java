@@ -13,11 +13,10 @@ public record ExpenseRequest(
         List<Long> participantMemberId,
         String title,
         Long expenditure,
-        String memo,
-        LocalDateTime spendAt
+        String memo
 ) {
 
     public Expense toExpense(Member paidBy, House house) {
-        return new Expense(title, expenditure, spendAt, memo, house, paidBy);
+        return new Expense(title, expenditure, memo, house, paidBy);
     }
 }

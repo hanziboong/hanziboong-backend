@@ -3,6 +3,9 @@ package skhu.hanziboong.ledger.service;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import skhu.hanziboong.global.exception.CustomException;
@@ -36,14 +39,31 @@ public class ExpenseService {
         List<Member> participants = memberRepository.findByIdInAndHouse_Id(
                 request.participantMemberId(), paidBy.getHouseId());
 
-        Expense expense = expenseRepository.save(request.toExpense(paidBy, house));
+        Expense expense = request.toExpense(paidBy, house);
         expense.addParticipants(participants);
+        expenseRepository.save(expense);
 
+         /** dto 순환 참조를 방지하기 위해서 dto를 분리하면서 N+1 문제가 발생하는 구조로 변경되었어요.
+         해결 방법들로는 dto projection이랑 fetch join등등 여러개를 찾아봤는데 아직 어떻게 적용하면 좀 잘 적용할 수 있을지 고민입니다..
+         **/
         return ExpenseResponse.from(expense);
     }
 
-//    @Transactional(readOnly = true)
-//    public Page<ExpenseResponse> findExpensesByHouseId(Long id, Pageable pageable) {
-//        Page<Expense> expense = expenseRepository.
-//    }
+    @Transactional(readOnly = true)
+    public Page<ExpenseResponse> findExpensesByHouseId(Long id, Pageable pageable) {
+        House house = houseRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_HOUSE_EXCEPTION,
+                        ErrorCode.NOT_FOUND_HOUSE_EXCEPTION.getMessage()));
+
+        List<Expense> expenses = expenseRepository.findAllByHouseWithParticipants(house);
+
+        int start = (int) pageable.getOffset();
+        int end = (Math.min(start + pageable.getPageSize(), expenses.size()));
+
+        List<ExpenseResponse> pageCount = expenses.subList(start, end).stream()
+                .map(ExpenseResponse::from)
+                .toList();
+
+        return new PageImpl<>(pageCount, pageable, expenses.size());
+    }
 }

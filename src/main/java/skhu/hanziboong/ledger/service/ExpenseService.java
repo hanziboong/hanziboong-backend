@@ -3,8 +3,6 @@ package skhu.hanziboong.ledger.service;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import skhu.hanziboong.global.exception.CustomException;
@@ -35,7 +33,7 @@ public class ExpenseService {
                 .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_HOUSE_EXCEPTION,
                         ErrorCode.NOT_FOUND_HOUSE_EXCEPTION.getMessage()));
 
-        List<Member> participants = memberRepository.findByIdInAndHouseId(
+        List<Member> participants = memberRepository.findByIdInAndHouse_Id(
                 request.participantMemberId(), paidBy.getHouseId());
 
         Expense expense = expenseRepository.save(request.toExpense(paidBy, house));

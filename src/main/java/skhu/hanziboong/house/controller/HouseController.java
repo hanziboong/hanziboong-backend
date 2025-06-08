@@ -39,7 +39,7 @@ public class HouseController {
             ),
     })
     @PostMapping
-    public ResponseEntity<HouseCreateResponse> createHouse(@RequestBody HouseRequest request) {
+    public ResponseEntity<HouseCreateResponse> createHouse(HouseRequest request) {
         HouseCreateResponse response = houseService.createHouse(request);
 
         return ResponseEntity.created(URI.create("/api/houses/" + response.id())).build();

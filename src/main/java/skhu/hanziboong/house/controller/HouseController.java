@@ -10,6 +10,7 @@ import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import skhu.hanziboong.global.exception.model.BadRequestException;
@@ -38,7 +39,7 @@ public class HouseController {
             ),
     })
     @PostMapping
-    public ResponseEntity<HouseCreateResponse> createHouse(HouseRequest request) {
+    public ResponseEntity<HouseCreateResponse> createHouse(@RequestBody HouseRequest request) {
         HouseCreateResponse response = houseService.createHouse(request);
 
         return ResponseEntity.created(URI.create("/api/houses/" + response.id())).build();

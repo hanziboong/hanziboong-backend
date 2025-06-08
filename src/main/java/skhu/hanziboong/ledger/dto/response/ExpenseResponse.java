@@ -23,7 +23,7 @@ public record ExpenseResponse(
                 .title(expense.getTitle())
                 .expenditure(expense.getExpenditure())
                 .memo(expense.getMemo())
-                .spendAt(expense.getSpendAt())
+                .spendAt(expense.getCreatedAt())
                 .paidBy(expense.getPaidBy())
                 .expenseParticipants(expense.getParticipants())
                 .build();

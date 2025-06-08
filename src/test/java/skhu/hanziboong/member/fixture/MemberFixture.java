@@ -1,25 +1,20 @@
 package skhu.hanziboong.member.fixture;
 
-import static skhu.hanziboong.house.fixture.HouseFixture.DORMITORY;
-
-import java.util.function.BiFunction;
 import skhu.hanziboong.house.domain.House;
 import skhu.hanziboong.member.domain.Member;
 
 public enum MemberFixture {
-    MEMBER((username, nickname) -> new Member(username, nickname, DORMITORY.create()));
+    MEMBER("testusername", "testnickname");
 
-    private final BiFunction<String, String, Member> generator;
+    private final String username;
+    private final String nickname;
 
-    MemberFixture(BiFunction<String, String, Member> generator) {
-        this.generator = generator;
+    MemberFixture(String username, String nickname) {
+        this.username = username;
+        this.nickname = nickname;
     }
 
-    public Member create() {
-        return generator.apply("testusername", "testnickname");
-    }
-
-    public Member createWith(House house) {
-        return new Member("testusername", "testnickname", house);
+    public Member createMemberByHouse(House house) {
+        return new Member(username, nickname, house);
     }
 }

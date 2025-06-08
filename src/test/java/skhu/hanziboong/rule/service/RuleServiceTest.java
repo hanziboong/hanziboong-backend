@@ -26,8 +26,8 @@ class RuleServiceTest {
     @DisplayName("규칙을 생성할 수 있다.")
     @Test
     void createRule() {
-        memberTestHelper.initMemberTestData();
-        RuleRequest request = new RuleRequest("test title", "test description", 1L);
+        Member savedMember = memberTestHelper.initMemberTestData();
+        RuleRequest request = new RuleRequest("test title", "test description", savedMember.getId());
 
         assertThatCode(() -> ruleService.createRule(request)).doesNotThrowAnyException();
     }

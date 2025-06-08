@@ -26,6 +26,6 @@ class HouseServiceTest {
         HouseRequest request = new HouseRequest("DORMITORY");
         HouseCreateResponse response = houseService.createHouse(request);
 
-        assertThat(response.id()).isEqualTo(1L);
+        assertThat(response.id()).isNotNull();
     }
 }

@@ -24,15 +24,16 @@ public class MemberTestHelper {
     }
 
     @Transactional
-    public void initMemberTestData() {
+    public Member initMemberTestData() {
         House house = persistHouse();
-        Member member = MEMBER.createWith(house);
-        memberRepository.save(member);
+        Member member = MEMBER.createMemberByHouse(house);
+
+        return memberRepository.save(member);
     }
 
     private House persistHouse() {
         House house = DORMITORY.create();
-        houseRepository.save(house);
-        return house;
+        
+        return houseRepository.save(house);
     }
 }

@@ -37,9 +37,6 @@ public class Expense extends BaseEntity {
 
     private String memo;
 
-    @Column(nullable = false)
-    private LocalDateTime spendAt;
-
     @ManyToOne(fetch = FetchType.LAZY)
     private House house;
 
@@ -54,7 +51,6 @@ public class Expense extends BaseEntity {
                    String memo, House house, Member paidBy) {
         this.title = title;
         this.expenditure = expenditure;
-        this.spendAt = spendAt;
         this.memo = memo;
         this.house = house;
         this.paidBy = paidBy;

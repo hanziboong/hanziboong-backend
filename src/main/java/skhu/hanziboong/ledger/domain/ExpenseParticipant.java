@@ -11,12 +11,13 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import skhu.hanziboong.global.BaseEntity;
 import skhu.hanziboong.member.domain.Member;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ExpenseParticipant {
+public class ExpenseParticipant extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,9 +31,13 @@ public class ExpenseParticipant {
     private Member participantMember;
 
     @Builder
-    public ExpenseParticipant(Boolean settled, Member participantMember) {
+    private ExpenseParticipant(Boolean settled, Member participantMember) {
         this.settled = settled;
         this.participantMember = participantMember;
+    }
+
+    public static ExpenseParticipant of(Member participantMember) {
+        return new ExpenseParticipant(false, participantMember);
     }
 
     public void settled() {

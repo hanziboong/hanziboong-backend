@@ -14,8 +14,8 @@ public record ExpenseResponse(
         Long expenditure,
         String memo,
         LocalDateTime spendAt,
-        Member paidBy,
-        List<ExpenseParticipant> expenseParticipants
+        PaidMemberDto paidMember,
+        List<ExpenseParticipantDto> expenseParticipants
 ) {
     public static ExpenseResponse from(Expense expense) {
         return ExpenseResponse.builder()
@@ -24,8 +24,8 @@ public record ExpenseResponse(
                 .expenditure(expense.getExpenditure())
                 .memo(expense.getMemo())
                 .spendAt(expense.getCreatedAt())
-                .paidBy(expense.getPaidBy())
-                .expenseParticipants(expense.getParticipants())
+                .paidMember(PaidMemberDto.from(expense.getPaidBy()))
+                .expenseParticipants(ExpenseParticipantDto.from(expense))
                 .build();
     }
 }

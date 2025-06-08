@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import skhu.hanziboong.ledger.controller.docs.ExpenseApiDocs;
@@ -22,7 +23,7 @@ public class ExpenseController implements ExpenseApiDocs {
 
     @Override
     @PostMapping
-    public ResponseEntity<Void> createExpense(ExpenseRequest request) {
+    public ResponseEntity<Void> createExpense(@RequestBody ExpenseRequest request) {
         ExpenseResponse response = expenseService.createExpense(request);
 
         return ResponseEntity.created(URI.create("api/expense" + response.id())).build();

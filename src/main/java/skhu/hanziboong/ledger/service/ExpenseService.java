@@ -50,6 +50,15 @@ public class ExpenseService {
     }
 
     @Transactional(readOnly = true)
+    public ExpenseResponse findExpenseByExpenseId(Long id) {
+        Expense expense = expenseRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_EXPENSE_EXCEPTION,
+                        ErrorCode.NOT_FOUND_EXPENSE_EXCEPTION.getMessage()));
+
+        return ExpenseResponse.from(expense);
+    }
+
+    @Transactional(readOnly = true)
     public Page<ExpenseResponse> findExpensesByHouseId(Long id, Pageable pageable) {
         House house = houseRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_HOUSE_EXCEPTION,

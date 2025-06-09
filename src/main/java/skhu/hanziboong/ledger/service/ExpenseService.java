@@ -43,7 +43,7 @@ public class ExpenseService {
         expense.addParticipants(participants);
         expenseRepository.save(expense);
 
-         /** dto 순환 참조를 방지하기 위해서 dto를 분리하면서 N+1 문제가 발생하는 구조로 변경되었어요.
+         /** 현재 코드는 dto 순환 참조를 방지하기 위해서 dto를 분리하면서 N+1 문제가 발생하는 구조가 되었어요.
          해결 방법들로는 dto projection이랑 fetch join등등 여러개를 찾아봤는데 아직 어떻게 적용하면 좀 잘 적용할 수 있을지 고민입니다..
          **/
         return ExpenseResponse.from(expense);

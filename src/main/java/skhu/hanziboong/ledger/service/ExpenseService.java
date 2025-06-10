@@ -80,12 +80,18 @@ public class ExpenseService {
     }
 
     @Transactional
-    public void settledByExpenseParticipantId(Long id) {
+    public boolean settledByExpenseParticipantId(Long id, Boolean isSettled) {
         ExpenseParticipant expenseParticipant = expenseParticipantRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_EXPENSE_PARTICIPANT_EXCEPTION,
                         ErrorCode.NOT_FOUND_EXPENSE_PARTICIPANT_EXCEPTION.getMessage()));
 
-        expenseParticipant.settled();
+        if (isSettled) {
+            expenseParticipant.settled();
+            return true;
+        }
+
+        expenseParticipant.unSettled();
+        return false;
     }
 
     @Transactional

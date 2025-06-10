@@ -56,6 +56,12 @@ public class Expense extends BaseEntity {
         this.paidBy = paidBy;
     }
 
+    public void update(String title, Long expenditure, String memo) {
+        this.title = title;
+        this.expenditure = expenditure;
+        this.memo = memo;
+    }
+
     public void addParticipants(List<Member> expenseParticipants) {
         Long perMemberAmount = calculateSettleAmount(expenseParticipants);
 

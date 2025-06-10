@@ -75,4 +75,15 @@ public class ExpenseService {
 
         return new PageImpl<>(pageCount, pageable, expenses.size());
     }
+
+
+
+    @Transactional
+    public void updateExpenseById(Long id, ExpenseRequest request) {
+        Expense expense = expenseRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_EXPENSE_EXCEPTION,
+                        ErrorCode.NOT_FOUND_EXPENSE_EXCEPTION.getMessage()));
+
+        expense.update(request.title(), request.expenditure(), request.memo());
+    }
 }

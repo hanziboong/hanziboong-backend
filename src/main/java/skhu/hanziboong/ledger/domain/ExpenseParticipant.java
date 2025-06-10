@@ -29,6 +29,9 @@ public class ExpenseParticipant extends BaseEntity {
     @Column(nullable = false)
     private Long amountToPay;
 
+    @Column(nullable = false)
+    private Long settledAmount;
+
     // 필요하다면 양방향 설계로 -> 한 명의 멤버가 본인이 참여한 지출 내역을 조회할 수 있도록
     @ManyToOne(fetch = FetchType.LAZY)
     private Member participantMember;
@@ -44,20 +47,22 @@ public class ExpenseParticipant extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Expense expense;
 
-    private ExpenseParticipant(Boolean settled, Long amountToPay, Member participantMember) {
-        this.settled = settled;
+    private ExpenseParticipant(Long amountToPay, Member participantMember) {
+        this.settled = false;
         this.amountToPay = amountToPay;
+        this.settledAmount = 0L;
         this.participantMember = participantMember;
     }
 
     public static ExpenseParticipant of(Member participantMember, Long amountToPay, Expense expense) {
-        ExpenseParticipant expenseParticipant = new ExpenseParticipant(false, amountToPay, participantMember);
+        ExpenseParticipant expenseParticipant = new ExpenseParticipant(amountToPay, participantMember);
         expenseParticipant.expense = expense;
 
         return expenseParticipant;
     }
 
     public void settled() {
+        this.settledAmount += this.amountToPay;
         this.settled = true;
     }
 }

@@ -1,4 +1,4 @@
-package skhu.hanziboong.ledger.dto.response;
+package skhu.hanziboong.expense.dto.response;
 
 import lombok.Builder;
 import skhu.hanziboong.member.domain.Member;

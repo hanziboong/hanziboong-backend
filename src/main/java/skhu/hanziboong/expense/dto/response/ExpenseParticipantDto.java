@@ -1,9 +1,9 @@
-package skhu.hanziboong.ledger.dto.response;
+package skhu.hanziboong.expense.dto.response;
 
 import java.util.List;
 import lombok.Builder;
-import skhu.hanziboong.ledger.domain.Expense;
-import skhu.hanziboong.ledger.domain.ExpenseParticipant;
+import skhu.hanziboong.expense.domain.Expense;
+import skhu.hanziboong.expense.domain.ExpenseParticipant;
 
 @Builder
 public record ExpenseParticipantDto(

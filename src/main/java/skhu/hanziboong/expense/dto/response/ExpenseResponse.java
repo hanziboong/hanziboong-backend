@@ -1,11 +1,9 @@
-package skhu.hanziboong.ledger.dto.response;
+package skhu.hanziboong.expense.dto.response;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Builder;
-import skhu.hanziboong.ledger.domain.Expense;
-import skhu.hanziboong.ledger.domain.ExpenseParticipant;
-import skhu.hanziboong.member.domain.Member;
+import skhu.hanziboong.expense.domain.Expense;
 
 @Builder
 public record ExpenseResponse(

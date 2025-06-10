@@ -1,4 +1,4 @@
-package skhu.hanziboong.ledger.controller.docs;
+package skhu.hanziboong.expense.controller.docs;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -10,8 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import skhu.hanziboong.global.exception.model.BadRequestException;
-import skhu.hanziboong.ledger.dto.request.ExpenseRequest;
-import skhu.hanziboong.ledger.dto.response.ExpenseResponse;
+import skhu.hanziboong.expense.dto.request.ExpenseRequest;
+import skhu.hanziboong.expense.dto.response.ExpenseResponse;
 
 @Tag(name = "가계부", description = "가계부 관리 API")
 public interface ExpenseApiDocs {

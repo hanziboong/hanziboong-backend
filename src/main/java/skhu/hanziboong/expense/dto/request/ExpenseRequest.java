@@ -1,10 +1,8 @@
-package skhu.hanziboong.ledger.dto.request;
+package skhu.hanziboong.expense.dto.request;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import skhu.hanziboong.house.domain.House;
-import skhu.hanziboong.ledger.domain.Expense;
-import skhu.hanziboong.ledger.domain.ExpenseParticipant;
+import skhu.hanziboong.expense.domain.Expense;
 import skhu.hanziboong.member.domain.Member;
 
 public record ExpenseRequest(

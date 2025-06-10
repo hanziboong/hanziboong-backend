@@ -1,4 +1,4 @@
-package skhu.hanziboong.ledger.controller;
+package skhu.hanziboong.expense.controller;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import java.net.URI;
@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import skhu.hanziboong.ledger.controller.docs.ExpenseApiDocs;
-import skhu.hanziboong.ledger.dto.request.ExpenseRequest;
-import skhu.hanziboong.ledger.dto.response.ExpenseResponse;
-import skhu.hanziboong.ledger.service.ExpenseService;
+import skhu.hanziboong.expense.controller.docs.ExpenseApiDocs;
+import skhu.hanziboong.expense.dto.request.ExpenseRequest;
+import skhu.hanziboong.expense.dto.response.ExpenseResponse;
+import skhu.hanziboong.expense.service.ExpenseService;
 
 @RestController
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)

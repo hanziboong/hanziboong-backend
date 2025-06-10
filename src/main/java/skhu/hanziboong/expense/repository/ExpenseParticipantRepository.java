@@ -1,7 +1,7 @@
-package skhu.hanziboong.ledger.repository;
+package skhu.hanziboong.expense.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import skhu.hanziboong.ledger.domain.ExpenseParticipant;
+import skhu.hanziboong.expense.domain.ExpenseParticipant;
 
 public interface ExpenseParticipantRepository extends JpaRepository<ExpenseParticipant, Long> {
 }

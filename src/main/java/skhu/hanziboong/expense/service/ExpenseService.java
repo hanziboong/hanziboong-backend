@@ -1,4 +1,4 @@
-package skhu.hanziboong.ledger.service;
+package skhu.hanziboong.expense.service;
 
 import java.util.List;
 import lombok.AccessLevel;
@@ -12,12 +12,12 @@ import skhu.hanziboong.global.exception.CustomException;
 import skhu.hanziboong.global.exception.ErrorCode;
 import skhu.hanziboong.house.domain.House;
 import skhu.hanziboong.house.repository.HouseRepository;
-import skhu.hanziboong.ledger.domain.Expense;
-import skhu.hanziboong.ledger.domain.ExpenseParticipant;
-import skhu.hanziboong.ledger.dto.request.ExpenseRequest;
-import skhu.hanziboong.ledger.dto.response.ExpenseResponse;
-import skhu.hanziboong.ledger.repository.ExpenseParticipantRepository;
-import skhu.hanziboong.ledger.repository.ExpenseRepository;
+import skhu.hanziboong.expense.domain.Expense;
+import skhu.hanziboong.expense.domain.ExpenseParticipant;
+import skhu.hanziboong.expense.dto.request.ExpenseRequest;
+import skhu.hanziboong.expense.dto.response.ExpenseResponse;
+import skhu.hanziboong.expense.repository.ExpenseParticipantRepository;
+import skhu.hanziboong.expense.repository.ExpenseRepository;
 import skhu.hanziboong.member.domain.Member;
 import skhu.hanziboong.member.repository.MemberRepository;
 

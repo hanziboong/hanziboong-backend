@@ -9,7 +9,8 @@ import skhu.hanziboong.ledger.domain.ExpenseParticipant;
 public record ExpenseParticipantDto(
         Long participantMemberId,
         String nickName,
-        Boolean settled
+        Boolean settled,
+        Long amountToPay
 ) {
     public static List<ExpenseParticipantDto> from(Expense expense) {
         return expense.getParticipants().stream()
@@ -22,6 +23,7 @@ public record ExpenseParticipantDto(
                 .participantMemberId(expenseParticipant.getId())
                 .nickName(expenseParticipant.getParticipantMember().getNickname())
                 .settled(expenseParticipant.getSettled())
+                .amountToPay(expenseParticipant.getAmountToPay())
                 .build();
     }
 }

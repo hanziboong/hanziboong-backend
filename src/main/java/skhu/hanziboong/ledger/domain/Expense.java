@@ -57,13 +57,16 @@ public class Expense extends BaseEntity {
     }
 
     public void addParticipants(List<Member> expenseParticipants) {
+        Long perMemberAmount = calculateSettleAmount(expenseParticipants);
+
         for (Member expenseParticipant : expenseParticipants) {
-            addParticipant(expenseParticipant);
+            ExpenseParticipant participant = ExpenseParticipant.of(expenseParticipant, perMemberAmount, this);
+            this.participants.add(participant);
         }
     }
 
-    private void addParticipant(Member expenseParticipant) {
-        ExpenseParticipant participant = ExpenseParticipant.of(expenseParticipant, this);
-        this.participants.add(participant);
+    // 정산시에 소수점에 대한 부분은 아직 고려하지 않았습니다. 부동소수점 연산으로 오차 없이 할 수 있을 것 같은데 추후에 회의해보고 도입해보겠습니다.
+    private Long calculateSettleAmount(List<Member> expenseParticipants) {
+        return this.expenditure / expenseParticipants.size();
     }
 }

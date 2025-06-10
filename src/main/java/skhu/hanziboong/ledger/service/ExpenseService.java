@@ -86,4 +86,9 @@ public class ExpenseService {
 
         expense.update(request.title(), request.expenditure(), request.memo());
     }
+
+    @Transactional
+    public void deleteExpenseByExpenseId(Long id) {
+        expenseRepository.deleteById(id);
+    }
 }

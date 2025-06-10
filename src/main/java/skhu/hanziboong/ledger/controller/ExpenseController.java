@@ -1,7 +1,6 @@
 package skhu.hanziboong.ledger.controller;
 
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import java.net.URI;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +24,7 @@ import skhu.hanziboong.ledger.service.ExpenseService;
 
 @RestController
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
-@RequestMapping("api/expense")
+@RequestMapping("/api/expense")
 public class ExpenseController implements ExpenseApiDocs {
 
     private final ExpenseService expenseService;
@@ -38,22 +37,31 @@ public class ExpenseController implements ExpenseApiDocs {
         return ResponseEntity.created(URI.create("api/expense" + response.id())).build();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ExpenseResponse> findExpense(@PathVariable Long id) {
+        ExpenseResponse response = expenseService.findExpenseByExpenseId(id);
+
+        return ResponseEntity.ok(response);
+    }
+
     @Override
-    @GetMapping("/{houseId}")
+    @GetMapping("/house/{id}")
     public ResponseEntity<Page<ExpenseResponse>> findExpensesByHouse(
             @PathVariable
-            Long houseId,
+            Long id,
             @Parameter(hidden = true)
             @PageableDefault(size = 10, sort = "createdAt", direction = Direction.DESC)
             Pageable pageable) {
 
-            Page<ExpenseResponse> responses = expenseService.findExpensesByHouseId(houseId, pageable);
+            Page<ExpenseResponse> responses = expenseService.findExpensesByHouseId(id, pageable);
 
         return ResponseEntity.ok(responses);
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<Boolean> settledByExpenseParticipantId(@PathVariable Long id, @RequestParam Boolean isSettled) {
+    @PatchMapping("/participant/{id}")
+    public ResponseEntity<Boolean> settledByExpenseParticipantId(
+            @PathVariable Long id,
+            @RequestParam Boolean isSettled) {
         Boolean response = expenseService.settledByExpenseParticipantId(id, isSettled);
 
         return ResponseEntity.ok(response);

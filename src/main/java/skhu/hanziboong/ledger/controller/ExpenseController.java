@@ -11,10 +11,12 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import skhu.hanziboong.ledger.controller.docs.ExpenseApiDocs;
 import skhu.hanziboong.ledger.dto.request.ExpenseRequest;
@@ -48,5 +50,12 @@ public class ExpenseController implements ExpenseApiDocs {
             Page<ExpenseResponse> responses = expenseService.findExpensesByHouseId(houseId, pageable);
 
         return ResponseEntity.ok(responses);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Boolean> settledByExpenseParticipantId(@PathVariable Long id, @RequestParam Boolean isSettled) {
+        Boolean response = expenseService.settledByExpenseParticipantId(id, isSettled);
+
+        return ResponseEntity.ok(response);
     }
 }

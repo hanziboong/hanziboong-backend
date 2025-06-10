@@ -47,6 +47,8 @@ public class ExpenseParticipant extends BaseEntity {
     private Expense expense;
 
     private ExpenseParticipant(Long amountToPay, Member participantMember) {
+        validatePaidAmountNotNegative(amountToPay);
+        validatePaidMemberNotNull(participantMember);
         this.settled = false;
         this.amountToPay = amountToPay;
         this.settledAmount = 0L;
@@ -68,5 +70,17 @@ public class ExpenseParticipant extends BaseEntity {
     public void unSettled() {
         this.settledAmount = 0L;
         this.settled = false;
+    }
+
+    private void validatePaidAmountNotNegative(Long amountToPay) {
+        if (amountToPay == null || amountToPay < 0) {
+            throw new IllegalArgumentException("정산할 금액은 null이거나 음수일 수 없습니다.");
+        }
+    }
+
+    private void validatePaidMemberNotNull(Member participantMember) {
+        if (participantMember == null) {
+            throw new IllegalArgumentException("정산 참여자는 null일 수 없습니다.");
+        }
     }
 }

@@ -66,4 +66,14 @@ public class ExpenseController implements ExpenseApiDocs {
 
         return ResponseEntity.ok(response);
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> updateExpenseDetails(
+            @PathVariable Long id,
+            @RequestBody ExpenseRequest request) {
+
+        expenseService.updateExpenseDetailsById(id, request);
+
+        return ResponseEntity.noContent().build();
+    }
 }

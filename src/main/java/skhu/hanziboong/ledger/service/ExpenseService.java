@@ -95,7 +95,7 @@ public class ExpenseService {
     }
 
     @Transactional
-    public void updateExpenseById(Long id, ExpenseRequest request) {
+    public void updateExpenseDetailsById(Long id, ExpenseRequest request) {
         Expense expense = expenseRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_EXPENSE_EXCEPTION,
                         ErrorCode.NOT_FOUND_EXPENSE_EXCEPTION.getMessage()));

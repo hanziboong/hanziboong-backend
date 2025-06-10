@@ -7,7 +7,8 @@ import skhu.hanziboong.ledger.domain.ExpenseParticipant;
 
 @Builder
 public record ExpenseParticipantDto(
-        Long participantMemberId,
+        Long id,
+        Long memberId,
         String nickName,
         Boolean settled,
         Long amountToPay
@@ -20,7 +21,8 @@ public record ExpenseParticipantDto(
 
     private static ExpenseParticipantDto of(ExpenseParticipant expenseParticipant) {
         return ExpenseParticipantDto.builder()
-                .participantMemberId(expenseParticipant.getId())
+                .id(expenseParticipant.getId())
+                .memberId(expenseParticipant.getParticipantMember().getId())
                 .nickName(expenseParticipant.getParticipantMember().getNickname())
                 .settled(expenseParticipant.getSettled())
                 .amountToPay(expenseParticipant.getAmountToPay())

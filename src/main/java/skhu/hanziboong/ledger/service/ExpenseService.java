@@ -13,8 +13,10 @@ import skhu.hanziboong.global.exception.ErrorCode;
 import skhu.hanziboong.house.domain.House;
 import skhu.hanziboong.house.repository.HouseRepository;
 import skhu.hanziboong.ledger.domain.Expense;
+import skhu.hanziboong.ledger.domain.ExpenseParticipant;
 import skhu.hanziboong.ledger.dto.request.ExpenseRequest;
 import skhu.hanziboong.ledger.dto.response.ExpenseResponse;
+import skhu.hanziboong.ledger.repository.ExpenseParticipantRepository;
 import skhu.hanziboong.ledger.repository.ExpenseRepository;
 import skhu.hanziboong.member.domain.Member;
 import skhu.hanziboong.member.repository.MemberRepository;
@@ -23,6 +25,7 @@ import skhu.hanziboong.member.repository.MemberRepository;
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class ExpenseService {
 
+    private final ExpenseParticipantRepository expenseParticipantRepository;
     private final ExpenseRepository expenseRepository;
     private final MemberRepository memberRepository;
     private final HouseRepository houseRepository;
@@ -76,7 +79,14 @@ public class ExpenseService {
         return new PageImpl<>(pageCount, pageable, expenses.size());
     }
 
+    @Transactional
+    public void settledByExpenseParticipantId(Long id) {
+        ExpenseParticipant expenseParticipant = expenseParticipantRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_EXPENSE_PARTICIPANT_EXCEPTION,
+                        ErrorCode.NOT_FOUND_EXPENSE_PARTICIPANT_EXCEPTION.getMessage()));
 
+        expenseParticipant.settled();
+    }
 
     @Transactional
     public void updateExpenseById(Long id, ExpenseRequest request) {

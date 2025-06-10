@@ -62,7 +62,12 @@ public class ExpenseParticipant extends BaseEntity {
     }
 
     public void settled() {
-        this.settledAmount += this.amountToPay;
+        this.settledAmount = this.amountToPay;
         this.settled = true;
+    }
+
+    public void unSettled() {
+        this.settledAmount = 0L;
+        this.settled = false;
     }
 }

@@ -1,5 +1,6 @@
 package skhu.hanziboong.house.domain;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -7,9 +8,12 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import skhu.hanziboong.expense.domain.ToBuyItem;
 import skhu.hanziboong.global.BaseEntity;
 
 @Getter
@@ -25,7 +29,15 @@ public class House extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private HouseType houseType;
 
+    @OneToMany(mappedBy = "house", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ToBuyItem> toBuyItems;
+
     public House(HouseType houseType) {
         this.houseType = houseType;
+    }
+
+    public void addToBuyItem(ToBuyItem item) {
+        toBuyItems.add(item);
+        item.linkTo(this);
     }
 }

@@ -38,6 +38,7 @@ public class ExpenseController implements ExpenseApiDocs {
         return ResponseEntity.created(URI.create("api/expense" + response.id())).build();
     }
 
+    @Override
     @GetMapping("/{id}")
     public ResponseEntity<ExpenseResponse> findExpense(@PathVariable Long id) {
         ExpenseResponse response = expenseService.findExpenseByExpenseId(id);
@@ -59,6 +60,7 @@ public class ExpenseController implements ExpenseApiDocs {
         return ResponseEntity.ok(responses);
     }
 
+    @Override
     @PatchMapping("/participant/{id}")
     public ResponseEntity<Boolean> settledByExpenseParticipantId(
             @PathVariable Long id,
@@ -68,6 +70,7 @@ public class ExpenseController implements ExpenseApiDocs {
         return ResponseEntity.ok(response);
     }
 
+    @Override
     @PatchMapping("/{id}")
     public ResponseEntity<Void> updateExpenseDetails(
             @PathVariable Long id,
@@ -78,6 +81,7 @@ public class ExpenseController implements ExpenseApiDocs {
         return ResponseEntity.ok().build();
     }
 
+    @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteExpense(@PathVariable Long id) {
         expenseService.deleteExpenseByExpenseId(id);

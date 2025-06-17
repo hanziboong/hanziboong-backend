@@ -36,7 +36,13 @@ public class House extends BaseEntity {
         this.houseType = houseType;
     }
 
-    public void addToBuyItem(ToBuyItem item) {
+    public void addToByItems(List<ToBuyItem> items) {
+        for (ToBuyItem item : items) {
+            addToBuyItem(item);
+        }
+    }
+
+    private void addToBuyItem(ToBuyItem item) {
         toBuyItems.add(item);
         item.linkTo(this);
     }

@@ -22,8 +22,8 @@ public class ToBuyItemService {
     private final ToBuyItemRepository toBuyItemRepository;
 
     @Transactional
-    public void createToBuyItemByHouseId(ToBuyItemsRequest request) {
-        House house = houseRepository.findById(request.houseId())
+    public void createToBuyItemByHouseId(Long houseId, ToBuyItemsRequest request) {
+        House house = houseRepository.findById(houseId)
                 .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_HOUSE_EXCEPTION,
                         ErrorCode.NOT_FOUND_HOUSE_EXCEPTION.getMessage()));
 

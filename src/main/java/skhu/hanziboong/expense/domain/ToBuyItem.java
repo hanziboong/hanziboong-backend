@@ -35,10 +35,18 @@ public class ToBuyItem extends BaseEntity {
     @JoinColumn(name = "house_id")
     private House house;
 
-    public ToBuyItem(String name) {
+    public static ToBuyItem create(String name) {
+        return new ToBuyItem(name);
+    }
+
+    private ToBuyItem(String name) {
         validateNotNull(name);
         this.name = name;
         this.checked = false;
+    }
+
+    public void updateName(String name) {
+        this.name = name;
     }
 
     public void check() {

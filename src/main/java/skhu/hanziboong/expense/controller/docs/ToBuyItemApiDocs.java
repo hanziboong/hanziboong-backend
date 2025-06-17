@@ -29,11 +29,59 @@ public interface ToBuyItemApiDocs {
     })
     ResponseEntity<Void> createToBuyItems(Long id, ToBuyItemsRequest request);
 
+    @Operation(summary = "사야 할 물건 완료 체크")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "요청이 정상적으로 처리되었을 때"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "요청 Body에 올바르지 않은 값이 전달되었을 때",
+                    content = @Content(schema = @Schema(implementation = BadRequestException.class))
+            ),
+    })
     ResponseEntity<ToBuyItemResponse> checkItem(Long id);
 
+    @Operation(summary = "사야 할 물건 조회")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "요청이 정상적으로 처리되었을 때"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "요청 Body에 올바르지 않은 값이 전달되었을 때",
+                    content = @Content(schema = @Schema(implementation = BadRequestException.class))
+            ),
+    })
     ResponseEntity<List<ToBuyItemResponse>> getToBuyItems(Long id);
 
+    @Operation(summary = "사야 할 물건 수정")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "203",
+                    description = "요청이 정상적으로 처리되었을 때"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "요청 Body에 올바르지 않은 값이 전달되었을 때",
+                    content = @Content(schema = @Schema(implementation = BadRequestException.class))
+            ),
+    })
     ResponseEntity<Void> updateItemName(Long id, String name);
 
+    @Operation(summary = "사야 할 물건 삭제")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "203",
+                    description = "요청이 정상적으로 처리되었을 때"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "요청 Body에 올바르지 않은 값이 전달되었을 때",
+                    content = @Content(schema = @Schema(implementation = BadRequestException.class))
+            ),
+    })
     ResponseEntity<Void> deleteItem(Long id);
 }

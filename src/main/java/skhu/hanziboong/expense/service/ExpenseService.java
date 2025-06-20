@@ -1,6 +1,8 @@
 package skhu.hanziboong.expense.service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -8,6 +10,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import skhu.hanziboong.expense.dto.response.ExpenseIdResponse;
 import skhu.hanziboong.global.exception.CustomException;
 import skhu.hanziboong.global.exception.ErrorCode;
 import skhu.hanziboong.house.domain.House;
@@ -31,7 +34,7 @@ public class ExpenseService {
     private final HouseRepository houseRepository;
 
     @Transactional
-    public ExpenseResponse createExpense(ExpenseRequest request) {
+    public ExpenseIdResponse createExpense(ExpenseRequest request) {
         Member paidBy = memberRepository.findById(request.paidMemberId())
                 .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER_EXCEPTION,
                         ErrorCode.NOT_FOUND_USER_EXCEPTION.getMessage()));
@@ -43,13 +46,17 @@ public class ExpenseService {
                 request.participantMemberId(), paidBy.getHouseId());
 
         Expense expense = request.toExpense(paidBy, house);
-        expense.addParticipants(participants);
         expenseRepository.save(expense);
 
-         /** 현재 코드는 dto 순환 참조를 방지하기 위해서 dto를 분리하면서 N+1 문제가 발생하는 구조가 되었어요.
-         해결 방법들로는 dto projection이랑 fetch join등등 여러개를 찾아봤는데 아직 어떻게 적용하면 좀 잘 적용할 수 있을지 고민입니다..
-         **/
-        return ExpenseResponse.from(expense);
+        long perAmount = expense.calculateSettleAmount(participants.size());
+
+        List<ExpenseParticipant> expenseParticipants = participants.stream()
+                .map(member -> ExpenseParticipant.of(member, perAmount, expense))
+                .toList();
+
+        expenseParticipantRepository.saveAll(expenseParticipants);
+
+        return ExpenseIdResponse.from(expense);
     }
 
     @Transactional(readOnly = true)
@@ -58,7 +65,9 @@ public class ExpenseService {
                 .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_EXPENSE_EXCEPTION,
                         ErrorCode.NOT_FOUND_EXPENSE_EXCEPTION.getMessage()));
 
-        return ExpenseResponse.from(expense);
+        List<ExpenseParticipant> participants = expenseParticipantRepository.findByExpenseId(id);
+
+        return ExpenseResponse.from(expense, participants);
     }
 
     @Transactional(readOnly = true)
@@ -67,16 +76,29 @@ public class ExpenseService {
                 .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_HOUSE_EXCEPTION,
                         ErrorCode.NOT_FOUND_HOUSE_EXCEPTION.getMessage()));
 
-        List<Expense> expenses = expenseRepository.findAllByHouseWithParticipants(house);
+        List<Expense> expenses = expenseRepository.findAllByHouse(house);
 
         int start = (int) pageable.getOffset();
         int end = (Math.min(start + pageable.getPageSize(), expenses.size()));
+        List<Expense> pagedExpenses = expenses.subList(start, end);
 
-        List<ExpenseResponse> pageCount = expenses.subList(start, end).stream()
-                .map(ExpenseResponse::from)
+        List<Long> expenseIds = pagedExpenses.stream()
+                .map(Expense::getId)
                 .toList();
 
-        return new PageImpl<>(pageCount, pageable, expenses.size());
+        List<ExpenseParticipant> participants = expenseParticipantRepository.findByExpenseIds(expenseIds);
+
+        Map<Long, List<ExpenseParticipant>> participantMap = participants.stream()
+                .collect(Collectors.groupingBy(expenseParticipant -> expenseParticipant.getExpense().getId()));
+
+        List<ExpenseResponse> pageContent = pagedExpenses.stream()
+                .map(expense -> ExpenseResponse.from(
+                        expense,
+                        participantMap.getOrDefault(expense.getId(), List.of())
+                ))
+                .toList();
+
+        return new PageImpl<>(pageContent, pageable, expenses.size());
     }
 
     @Transactional

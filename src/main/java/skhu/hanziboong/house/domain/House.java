@@ -29,21 +29,7 @@ public class House extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private HouseType houseType;
 
-    @OneToMany(mappedBy = "house", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ToBuyItem> toBuyItems;
-
     public House(HouseType houseType) {
         this.houseType = houseType;
-    }
-
-    public void addToByItems(List<ToBuyItem> items) {
-        for (ToBuyItem item : items) {
-            addToBuyItem(item);
-        }
-    }
-
-    private void addToBuyItem(ToBuyItem item) {
-        toBuyItems.add(item);
-        item.linkTo(this);
     }
 }

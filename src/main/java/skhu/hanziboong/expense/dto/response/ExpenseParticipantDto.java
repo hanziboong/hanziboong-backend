@@ -13,8 +13,8 @@ public record ExpenseParticipantDto(
         Boolean settled,
         Long amountToPay
 ) {
-    public static List<ExpenseParticipantDto> from(Expense expense) {
-        return expense.getParticipants().stream()
+    public static List<ExpenseParticipantDto> from(List<ExpenseParticipant> expenseParticipant) {
+        return expenseParticipant.stream()
                 .map(ExpenseParticipantDto::of)
                 .toList();
     }

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Builder;
 import skhu.hanziboong.expense.domain.Expense;
+import skhu.hanziboong.expense.domain.ExpenseParticipant;
 
 @Builder
 public record ExpenseResponse(
@@ -15,7 +16,7 @@ public record ExpenseResponse(
         PaidMemberDto paidMember,
         List<ExpenseParticipantDto> expenseParticipants
 ) {
-    public static ExpenseResponse from(Expense expense) {
+    public static ExpenseResponse from(Expense expense, List<ExpenseParticipant> expenseParticipants) {
         return ExpenseResponse.builder()
                 .id(expense.getId())
                 .title(expense.getTitle())
@@ -23,7 +24,7 @@ public record ExpenseResponse(
                 .memo(expense.getMemo())
                 .spendAt(expense.getCreatedAt())
                 .paidMember(PaidMemberDto.from(expense.getPaidBy()))
-                .expenseParticipants(ExpenseParticipantDto.from(expense))
+                .expenseParticipants(ExpenseParticipantDto.from(expenseParticipants))
                 .build();
     }
 }

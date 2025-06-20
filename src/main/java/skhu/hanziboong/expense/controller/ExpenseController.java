@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import skhu.hanziboong.expense.controller.docs.ExpenseApiDocs;
 import skhu.hanziboong.expense.dto.request.ExpenseRequest;
+import skhu.hanziboong.expense.dto.response.ExpenseIdResponse;
 import skhu.hanziboong.expense.dto.response.ExpenseResponse;
 import skhu.hanziboong.expense.service.ExpenseService;
 
@@ -33,7 +34,7 @@ public class ExpenseController implements ExpenseApiDocs {
     @Override
     @PostMapping
     public ResponseEntity<Void> createExpense(@RequestBody ExpenseRequest request) {
-        ExpenseResponse response = expenseService.createExpense(request);
+        ExpenseIdResponse response = expenseService.createExpense(request);
 
         return ResponseEntity.created(URI.create("api/expense" + response.id())).build();
     }

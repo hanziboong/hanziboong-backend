@@ -42,7 +42,10 @@ public enum ErrorCode {
     // 404 NOT FOUND
     NOT_FOUND_EMAIL_EXCEPTION(HttpStatus.NOT_FOUND, "찾을 수 없는 Email입니다."),
     NOT_FOUND_HOUSE_EXCEPTION(HttpStatus.NOT_FOUND, "찾을 수 없는 집입니다."),
+    NOT_FOUND_TO_BUY_ITEM_EXCEPTION(HttpStatus.NOT_FOUND, "찾을 수 없는 사야 할 물건 목록입니다."),
     NOT_FOUND_USER_EXCEPTION(HttpStatus.NOT_FOUND, "해당 검색결과에 해당하는 사용자를 찾을 수 없습니다."),
+    NOT_FOUND_EXPENSE_EXCEPTION(HttpStatus.NOT_FOUND, "찾을 수 없는 지출 내역입니다."),
+    NOT_FOUND_EXPENSE_PARTICIPANT_EXCEPTION(HttpStatus.NOT_FOUND, "찾을 수 없는 정산입니다."),
 
     // 409 Conflict
     ALREADY_EXIST_STUDENT_EXCEPTION(HttpStatus.CONFLICT, "이미 회원가입이 완료된 사용자입니다."),

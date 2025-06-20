@@ -35,14 +35,15 @@ public class ToBuyItem extends BaseEntity {
     @JoinColumn(name = "house_id")
     private House house;
 
-    public static ToBuyItem create(String name) {
-        return new ToBuyItem(name);
+    public static ToBuyItem create(String name, House house) {
+        return new ToBuyItem(name, house);
     }
 
-    private ToBuyItem(String name) {
-        validateNotNull(name);
+    private ToBuyItem(String name, House house) {
+        validateNotNull(name, house);
         this.name = name;
         this.checked = false;
+        this.house = house;
     }
 
     public void updateName(String name) {
@@ -53,13 +54,13 @@ public class ToBuyItem extends BaseEntity {
         this.checked = !this.checked;
     }
 
-    public void linkTo(House house) {
-        this.house = house;
-    }
-
-    private void validateNotNull(String name) {
+    private void validateNotNull(String name, House house) {
         if (name == null || name.isBlank() || name.isEmpty()) {
             throw new IllegalArgumentException("사야 할 물건의 제목은 비어있을 수 없습니다.");
+        }
+
+        if (house == null) {
+            throw new IllegalArgumentException("house가 null일 수 없습니다.");
         }
     }
 }

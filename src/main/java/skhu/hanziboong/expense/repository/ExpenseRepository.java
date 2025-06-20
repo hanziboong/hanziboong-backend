@@ -10,11 +10,5 @@ import skhu.hanziboong.expense.domain.Expense;
 
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
 
-    @Query("""
-    SELECT DISTINCT e FROM Expense e
-    LEFT JOIN FETCH e.participants p
-    LEFT JOIN FETCH p.participantMember
-    WHERE e.house = :house
-    """)
-    List<Expense> findAllByHouseWithParticipants(@Param("house") House house);
+    List<Expense> findAllByHouse(House house);
 }

@@ -12,8 +12,8 @@ public record ToBuyItemResponse(
         Boolean checked
 ) {
 
-    public static List<ToBuyItemResponse> from(House house) {
-        return house.getToBuyItems().stream()
+    public static List<ToBuyItemResponse> from(List<ToBuyItem> toBuyItems) {
+        return toBuyItems.stream()
                 .map(ToBuyItemResponse::from)
                 .toList();
     }

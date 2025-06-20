@@ -28,10 +28,10 @@ public class ToBuyItemService {
                         ErrorCode.NOT_FOUND_HOUSE_EXCEPTION.getMessage()));
 
         List<ToBuyItem> toBuyItems = request.itemNames().stream()
-                .map(ToBuyItem::create)
+                .map(itemName -> ToBuyItem.create(itemName, house))
                 .toList();
 
-        house.addToByItems(toBuyItems);
+        toBuyItemRepository.saveAll(toBuyItems);
     }
 
     @Transactional
@@ -47,11 +47,9 @@ public class ToBuyItemService {
 
     @Transactional
     public List<ToBuyItemResponse> getToBuyItemsByHouseId(Long id) {
-        House house = houseRepository.findWithToBuyItemsById(id)
-                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_HOUSE_EXCEPTION,
-                        ErrorCode.NOT_FOUND_HOUSE_EXCEPTION.getMessage()));
+        List<ToBuyItem> toBuyItems = toBuyItemRepository.findByHouse_id(id);
 
-        return ToBuyItemResponse.from(house);
+        return ToBuyItemResponse.from(toBuyItems);
     }
 
     @Transactional

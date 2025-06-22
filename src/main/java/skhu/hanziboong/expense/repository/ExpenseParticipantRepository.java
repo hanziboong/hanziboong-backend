@@ -21,4 +21,6 @@ public interface ExpenseParticipantRepository extends JpaRepository<ExpenseParti
     where ep.expense.id in :expenseIds
     """)
     List<ExpenseParticipant> findByExpenseIds(@Param("expenseIds") List<Long> expenseIds);
+
+    void deleteByExpense_Id(Long id);
 }

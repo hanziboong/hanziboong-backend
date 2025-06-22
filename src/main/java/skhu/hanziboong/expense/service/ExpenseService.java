@@ -127,6 +127,7 @@ public class ExpenseService {
 
     @Transactional
     public void deleteExpenseByExpenseId(Long id) {
+        expenseParticipantRepository.deleteByExpense_Id(id);
         expenseRepository.deleteById(id);
     }
 }

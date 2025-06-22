@@ -28,9 +28,9 @@ public class ToBuyItemController implements ToBuyItemApiDocs {
     @Override
     @PostMapping("/house/{id}")
     public ResponseEntity<Void> createToBuyItems(@PathVariable Long id,
-                                                 @RequestBody ToBuyItemsRequest request) {
-        toBuyItemService.createToBuyItemByHouseId(id, request);
-        return ResponseEntity.created(URI.create("/api/to-buy-items")).build();
+                                                 @RequestParam String itemName) {
+        toBuyItemService.createToBuyItemByHouseId(id, itemName);
+        return ResponseEntity.created(URI.create("/api/toBuy/house/" + id)).build();
     }
 
     @Override

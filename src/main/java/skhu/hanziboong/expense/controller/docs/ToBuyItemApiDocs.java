@@ -27,7 +27,7 @@ public interface ToBuyItemApiDocs {
                     content = @Content(schema = @Schema(implementation = BadRequestException.class))
             ),
     })
-    ResponseEntity<Void> createToBuyItems(Long id, ToBuyItemsRequest request);
+    ResponseEntity<Void> createToBuyItems(Long id, String itemName);
 
     @Operation(summary = "사야 할 물건 완료 체크")
     @ApiResponses(value = {

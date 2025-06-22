@@ -22,16 +22,14 @@ public class ToBuyItemService {
     private final ToBuyItemRepository toBuyItemRepository;
 
     @Transactional
-    public void createToBuyItemByHouseId(Long houseId, ToBuyItemsRequest request) {
+    public void createToBuyItemByHouseId(Long houseId, String itemName) {
         House house = houseRepository.findById(houseId)
                 .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_HOUSE_EXCEPTION,
                         ErrorCode.NOT_FOUND_HOUSE_EXCEPTION.getMessage()));
 
-        List<ToBuyItem> toBuyItems = request.itemNames().stream()
-                .map(itemName -> ToBuyItem.create(itemName, house))
-                .toList();
+        ToBuyItem toBuyItem = ToBuyItem.create(itemName, house);
 
-        toBuyItemRepository.saveAll(toBuyItems);
+        toBuyItemRepository.save(toBuyItem);
     }
 
     @Transactional

@@ -51,7 +51,7 @@ public class Rule extends BaseEntity {
 
     private void validateNotBlank(String title) {
         if (title == null || title.isBlank()) {
-            throw new IllegalArgumentException("규칙 제목, 규칙 설명은 비어있을 수 없습니다.");
+            throw new IllegalArgumentException("규칙 제목은 비어있을 수 없습니다.");
         }
     }
 
